@@ -37,18 +37,13 @@ For documentation and details see http://dpdk.org/doc/guides/linux_gsg/index.htm
 ```
 **NOTE:** if you are running on a i686 machine, please use `i686-native-linuxapp-gcc` as `RTE_TARGET`
 
-## 3.2 Install Tstat-DPDK
-Get it from the git repository
+## 3.2 Install DPDK-Dump
+Get it from the git repository. Remind to set `RTE_SDK` and `RTE_TARGET`.
 ```bash
-	svn co http://tstat.polito.it/svn/software/tstat/branches/tstat-dpdk/
-	cd tstat-dpdk/tstat-3.0r648
-	./autogen.sh
-	./configure --enable-libtstat
+	git clone https://github.com/marty90/DPDK-Dump
+	cd DPDK-Dump
 	make
-	sudo make install
-	cd ../one_copy_cluster_dpdk
-	make clean && make
-	cd ../..
+	cd ..
 ```
 
 # 4. Configuration of the machine
@@ -95,25 +90,45 @@ Network devices using kernel driver
 
 # 5. Usage
 ## 5.1 How to start it
-To start DPDK-Dump just execute `./build/dpdk-dump`. The are few parameters:
+To start DPDK-Dump just execute `./build/dpdk-dump`. If not specified it uses all the port bound to DPDK drivers.
+Root priviledges are needed.
+The are few parameters:
 ```bash
-	./build/dpdk-dump -c COREMASK -n NUM -- -w file [-c num_pkt] [-G rotate_seconds] [-W num_rotations] [-B buffer_size]
+	./build/dpdk-dump -c COREMASK -n NUM [--use-device PCI_ADDR] -- -w file [-c num_pkt] [-G rotate_seconds] [-W num_rotations] [-B buffer_size]
 ```
-The paramenters have this meaning:
-* COREMASK: The cores where to bind the program. It needs 2 cores
-* NUM: Number of memory channels to use. It's 2 or 4.
-* file: output file in pcap format
-* num_pkt: quit after saving num_pkt packets
-* rotate_seconds: rotate dump files each rotate_seconds. Progressive numbers edded to file name.
-* num_rotations: maximum number of rotations to do. If 0 it quits after rotate_seconds.
-* buffer_size: Iinternal buffer size. Default is 1 Milion packets.
+The parameters have this meaning:
+* `COREMASK`: The cores where to bind the program. **It needs 2 cores**
+* `NUM`: Number of memory channels to use. It's 2 or 4.
+* `PCI_ADDR`: The port(s) where to capture. If not present, it captures from every port.
+* `file`: output file in pcap format
+* `num_pkt`: quit after saving num_pkt packets
+* `rotate_seconds`: rotate dump files each `rotate_seconds`. Progressive numbers edded to file name.
+* `num_rotations`: maximum number of rotations to do. If 0 it quits after `rotate_seconds`.
+* `buffer_size`: Internal buffer size. Default is 1 Milion packets.
+
+The parameters before `--` are DPDK enviroment related. See its guide for further explaination.
+
+Here some example of command lines:
+
+* It starts a capture unbounded in time to the file `capture.pcap`
+```bash
+	sudo ./build/dpdk-dump -c 0x03 -n 4 -- -w capture.pcap
+```
+
+* It starts a capture changing capture file every 60 seconds. After 30 files (30 minutes) it quits.
+```bash
+	sudo ./build/dpdk-dump -c 0x03 -n 4 -- -w capture.pcap -G 60 -w 30
+```
+
+* It starts a capture just on the device with the specified PCI address. `--use-device` is a parameter of DPDK enviroment.
+```bash
+	sudo ./build/dpdk-dump -c 0x03 -n 4 --use-device 01:00.0 -- -w capture.pcap
+```
 
 The system approximately each one seconds prints statistics about its performances, a line each port.
 ```
-PORT:  0 Rx: 0 Drp: 0 Tot: 0 Perc: -nan%
-PORT:  1 Rx: 0 Drp: 0 Tot: 0 Perc: -nan%
-PORT:  2 Rx: 102635 Drp: 34 Tot: 102669 Perc: 0.033%
-PORT:  3 Rx: 88060 Drp: 0 Tot: 88060 Perc: 0.000%
+PORT:  0 Rx: 102669 Drp: 0 Tot: 102669 Perc: 0.000%
+PORT:  1 Rx: 88060  Drp: 0 Tot: 88060  Perc: 0.000%
 -------------------------------------------------
-TOT:     Rx: 190695 Drp: 34 Tot: 190729 Perc: 0.018%
+TOT:     Rx: 190729 Drp: 34 Tot: 190729 Perc: 0.018%
 ```
