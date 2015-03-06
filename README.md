@@ -1,7 +1,7 @@
 DPDK-Dump
 ==========
 
-# 1. Description of the software
+## 1. Description of the software
 This program is able to store on disk network traffic at high speed using Intel DPDK library.
 It retreives traffic from network interfaces and writes it on disk in pcap format.
 It can achieve high speed when the disks are fast.
@@ -9,7 +9,7 @@ It can achieve high speed when the disks are fast.
 * For information about DPDK please read: http://dpdk.org/doc
 * For information about this Readme file and DPDK-Dump please write to [martino.trevisan@studenti.polito.it](mailto:martino.trevisan@studenti.polito.it)
 
-# 2. Requirements
+## 2. Requirements
 * A machine with DPDK supported network interfaces.
 * A Debian based Linux distribution with kernel >= 2.6.3
 * Linux kernel headers: to install type
@@ -18,11 +18,11 @@ It can achieve high speed when the disks are fast.
 ```
 * Several package needed before installing this software:
   * DPDK needs: `make, cmp, sed, grep, arch, glibc.i686, libgcc.i686, libstdc++.i686, glibc-devel.i686, python`
-  * DPDK-Dump needs: `libpcap-dev, libpcap` 
+  * DPDK-Dump needs: `git, libpcap-dev, libpcap` 
 
-# 3. Installation
+## 3. Installation
 
-## 3.1 Install DPDK
+### 3.1 Install DPDK
 Install DPDK 1.8.0. With other versions is not guaranted it works properly.
 Make the enviroment variable `RTE_SDK` and `RTE_TARGET` to point respectively to DPDK installation directory and compilation target.
 For documentation and details see http://dpdk.org/doc/guides/linux_gsg/index.html
@@ -37,7 +37,7 @@ For documentation and details see http://dpdk.org/doc/guides/linux_gsg/index.htm
 ```
 **NOTE:** if you are running on a i686 machine, please use `i686-native-linuxapp-gcc` as `RTE_TARGET`
 
-## 3.2 Install DPDK-Dump
+### 3.2 Install DPDK-Dump
 Get it from the git repository. Remind to set `RTE_SDK` and `RTE_TARGET`.
 ```bash
 	git clone https://github.com/marty90/DPDK-Dump
@@ -46,10 +46,10 @@ Get it from the git repository. Remind to set `RTE_SDK` and `RTE_TARGET`.
 	cd ..
 ```
 
-# 4. Configuration of the machine
+## 4. Configuration of the machine
 Before running DPDK-Dump there are few things to do:
 
-## 4.1 Reserve a big number of hugepages to DPDK
+### 4.1 Reserve a big number of hugepages to DPDK
 The commands below reserve 1024 hugepages. The size of each huge page is 2MB. Check to have enough RAM on your machine.
 ```bash
 	sudo su
@@ -57,12 +57,12 @@ The commands below reserve 1024 hugepages. The size of each huge page is 2MB. Ch
 	mkdir -p /mnt/huge
 	mount -t hugetlbfs nodev /mnt/huge
 ```
-## 4.2 Set CPU on performance governor
+### 4.2 Set CPU on performance governor
 To achieve the best performances, your CPU must run always at the highest speed. You need to have installed `cpufrequtils` package.
 ```bash
 	sudo cpufreq-set -r -g performance
 ```
-## 4.3  Bind the interfaces you want to use with DPDK drivers
+### 4.3  Bind the interfaces you want to use with DPDK drivers
 It means that you have to load DPDK driver and associate it to you network interface.
 Tstat-DPDK reads packets from all the interfaces bound to DPDK.
 Remember to set `RTE_SDK` and `RTE_TARGET` when executing the below commands.
@@ -88,8 +88,7 @@ Network devices using kernel driver
 ```
 **NOTE:** If for any reason you don't want to bind all the DPDK-supported interfaces to DPDK enviroment, use the `dpdk_nic_bind.py` as described in the DPDK getting started guide.
 
-# 5. Usage
-## 5.1 How to start it
+## 5. Usage
 To start DPDK-Dump just execute `./build/dpdk-dump`. If not specified it uses all the port bound to DPDK drivers.
 Root priviledges are needed.
 The are few parameters:
@@ -130,5 +129,5 @@ The system approximately each one seconds prints statistics about its performanc
 PORT:  0 Rx: 102669 Drp: 0 Tot: 102669 Perc: 0.000%
 PORT:  1 Rx: 88060  Drp: 0 Tot: 88060  Perc: 0.000%
 -------------------------------------------------
-TOT:     Rx: 190729 Drp: 34 Tot: 190729 Perc: 0.018%
+TOT:     Rx: 190729 Drp: 34 Tot: 190729 Perc: 0.000%
 ```
