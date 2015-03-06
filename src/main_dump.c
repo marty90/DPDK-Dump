@@ -20,6 +20,7 @@ uint64_t seconds_rotation = 0;
 uint64_t last_rotation = 0;
 int64_t  nb_rotations=0;
 int64_t  max_rotations = -1 ;
+uint64_t max_size = 0 ;
 uint64_t nb_captured_packets = 0;
 uint64_t nb_dumped_packets = 0;
 uint64_t sz_dumped_file = 0;
@@ -205,6 +206,10 @@ static int main_loop_consumer(__attribute__((unused)) void * arg){
 		nb_dumped_packets++;
 		sz_dumped_file += rte_pktmbuf_data_len(m) + sizeof (pcap_hdr) ;
 
+		/* Quit if reached the size threshold */
+		if (max_size != 0 && sz_dumped_file >= max_size*1024)
+			sig_handler(SIGINT);
+
 		/* Quit if reached the packet threshold */
 		if (max_packets != 0 && nb_dumped_packets >= max_packets)
 			sig_handler(SIGINT);
@@ -337,7 +342,7 @@ static int parse_args(int argc, char **argv)
 	
 
 	/* Retrive arguments */
-	while ((option = getopt(argc, argv,"w:c:B:G:W:")) != -1) {
+	while ((option = getopt(argc, argv,"w:c:B:G:W:C:")) != -1) {
         	switch (option) {
              		case 'w' : file_name = strdup(optarg); /* File name, mandatory */
                  		break;
@@ -348,6 +353,8 @@ static int parse_args(int argc, char **argv)
 			case 'G': seconds_rotation = atoi (optarg); /* Rotation of output in seconds. A progressive number will be added to file name */
 				break;
 			case 'W': max_rotations = atoi (optarg); /* Max rotations done. In case of 0, the program quits after first rotation time */
+				break;
+			case 'C': max_size = atoi (optarg); /* Max file size in KB. When reached, the program quits */
 				break;
              		default: return -1; 
 		}
@@ -373,6 +380,5 @@ int isPowerOfTwo (unsigned int x) {
    x == 268435456 || x == 536870912 || x == 1073741824 ||
    x == 2147483648);
 }
-
 
 
