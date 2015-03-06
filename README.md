@@ -93,7 +93,7 @@ To start DPDK-Dump just execute `./build/dpdk-dump`. If not specified it uses al
 Root priviledges are needed.
 The are few parameters:
 ```bash
-	./build/dpdk-dump -c COREMASK -n NUM [--use-device PCI_ADDR] -- -w file [-c num_pkt] [-C max_size] [-G rotate_seconds] [-W num_rotations] [-B buffer_size]
+	./build/dpdk-dump -c COREMASK -n NUM [-w PCI_ADDR] -- -w file [-c num_pkt] [-C max_size] [-G rotate_seconds] [-W num_rotations] [-B buffer_size]
 ```
 The parameters have this meaning:
 * `COREMASK`: The cores where to bind the program. **It needs 2 cores**
@@ -120,9 +120,9 @@ Here some example of command lines:
 	sudo ./build/dpdk-dump -c 0x03 -n 4 -- -w capture.pcap -G 60 -w 30
 ```
 
-* It starts a capture just on the device with the specified PCI address. `--use-device` is a parameter of DPDK enviroment.
+* It starts a capture just on the device with the specified PCI address. `-w` is a parameter of DPDK enviroment.
 ```bash
-	sudo ./build/dpdk-dump -c 0x03 -n 4 --use-device 01:00.0 -- -w capture.pcap
+	sudo ./build/dpdk-dump -c 0x03 -n 4 -w 01:00.0 -- -w capture.pcap
 ```
 
 The system approximately each one seconds prints statistics about its performances, a line each port.
