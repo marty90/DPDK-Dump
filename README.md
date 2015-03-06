@@ -93,7 +93,7 @@ To start DPDK-Dump just execute `./build/dpdk-dump`. If not specified it uses al
 Root priviledges are needed.
 The are few parameters:
 ```bash
-	./build/dpdk-dump -c COREMASK -n NUM [--use-device PCI_ADDR] -- -w file [-c num_pkt] [-G rotate_seconds] [-W num_rotations] [-B buffer_size]
+	./build/dpdk-dump -c COREMASK -n NUM [--use-device PCI_ADDR] -- -w file [-c num_pkt] [-C max_size] [-G rotate_seconds] [-W num_rotations] [-B buffer_size]
 ```
 The parameters have this meaning:
 * `COREMASK`: The cores where to bind the program. **It needs 2 cores**
@@ -101,6 +101,7 @@ The parameters have this meaning:
 * `PCI_ADDR`: The port(s) where to capture. If not present, it captures from every port.
 * `file`: output file in pcap format
 * `num_pkt`: quit after saving num_pkt packets
+* `max_size`: quit after saving an amount of packets equal to max_size.
 * `rotate_seconds`: rotate dump files each `rotate_seconds`. Progressive numbers edded to file name.
 * `num_rotations`: maximum number of rotations to do. If 0 it quits after `rotate_seconds`.
 * `buffer_size`: Internal buffer size. Default is 1 Milion packets.
