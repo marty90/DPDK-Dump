@@ -129,5 +129,5 @@ The system approximately each one seconds prints statistics about its performanc
 PORT:  0 Rx: 102669 Drp: 0 Tot: 102669 Perc: 0.000%
 PORT:  1 Rx: 88060  Drp: 0 Tot: 88060  Perc: 0.000%
 -------------------------------------------------
-TOT:     Rx: 190729 Drp: 34 Tot: 190729 Perc: 0.000%
+TOT:     Rx: 190729 Drp: 0 Tot: 190729 Perc: 0.000%
 ```
