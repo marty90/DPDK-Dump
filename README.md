@@ -101,7 +101,7 @@ The parameters have this meaning:
 * `PCI_ADDR`: The port(s) where to capture. If not present, it captures from every port.
 * `file`: output file in pcap format
 * `num_pkt`: quit after saving num_pkt packets
-* `max_size`: quit after saving an amount of packets equal to max_size.
+* `max_size`: quit after saving an amount of packets equal to max_size (in KB).
 * `rotate_seconds`: rotate dump files each `rotate_seconds`. Progressive numbers edded to file name.
 * `num_rotations`: maximum number of rotations to do. If 0 it quits after `rotate_seconds`.
 * `buffer_size`: Internal buffer size. Default is 1 Milion packets.
