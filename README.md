@@ -8,6 +8,7 @@ It can achieve high speed when the disks are fast.
 
 * For information about DPDK please read: http://dpdk.org/doc
 * For information about this Readme file and DPDK-Dump please write to [martino.trevisan@studenti.polito.it](mailto:martino.trevisan@studenti.polito.it)
+* A wiki page is available here: https://github.com/marty90/DPDK-Dump/wiki
 
 ## 2. Requirements
 * A machine with DPDK supported network interfaces.
