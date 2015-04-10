@@ -8,7 +8,8 @@ It can achieve high speed when the disks are fast.
 
 * For information about DPDK please read: http://dpdk.org/doc
 * For information about this Readme file and DPDK-Dump please write to [martino.trevisan@studenti.polito.it](mailto:martino.trevisan@studenti.polito.it)
-* A wiki page is available here: https://github.com/marty90/DPDK-Dump/wiki
+* A larger set of tools is collected at this page: http://www.telecom-paristech.fr/~drossi/index.php?n=Software.10GbpsTools
+* **DPDK-Dump** has been developed in the context of the **FP7 mPlane** project – an Intelligent Measurement plane for Future Network and Application Management (http://www.ict-mplane.eu/)
 
 ## 2. Requirements
 * A machine with DPDK supported network interfaces.
