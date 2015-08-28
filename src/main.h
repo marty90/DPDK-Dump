@@ -8,7 +8,7 @@
 * the Free Software Foundation; either version 2 of the License, or
 * (at your option) any later version.
 *
-* For bug report and other information please visit Tstat site:
+* For bug report and other information please write to:
 * martino.trevisan@studenti.polito.it
 *
 *
